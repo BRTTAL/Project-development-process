@@ -1,0 +1,50 @@
+{{#if user.defaultPw}}<div class="alert alert-danger">ตอนนี้ใช้รหัสผ่านเริ่มต้น/ชั่วคราวอยู่ — <a href="/account"><b>เปลี่ยนรหัสผ่านทันที</b></a></div>{{/if}}
+<h3 class="mb-3">สวัสดี {{user.name}} <span class="badge badge-light border">{{user.roleTh}}</span></h3>
+<dialog id="addp" onclose="try{sessionStorage.setItem('addpSkip','1')}catch(e){}"><div class="dlg"><div class="d-flex justify-content-between"><h4>{{#if needsProject}}ยินดีต้อนรับ! กรอกรายละเอียดโครงงานของคุณ{{else}}เพิ่มโครงงาน{{/if}}</h4><button class="btn btn-sm btn-light" onclick="document.getElementById('addp').close()" aria-label="ปิด">✕</button></div>{{> projectForm}}</div></dialog>
+{{#if needsProject}}<script>try{if(!sessionStorage.getItem('addpSkip'))document.getElementById('addp').showModal()}catch(e){document.getElementById('addp').showModal()}</script>{{/if}}
+
+<div class="row mb-3">
+{{#if isUser}}
+  {{#if canSubmit}}<div class="col-md-4 mb-2"><a class="card p-3 act" href="{{submitLink}}"><b>📤 ส่งงานให้อาจารย์</b><small>แนบลิงก์หรือไฟล์ แล้วส่งตรวจ</small></a></div>{{/if}}
+  <div class="col-md-4 mb-2"><a class="card p-3 act" href="#" onclick="document.getElementById('addp').showModal();return false"><b>➕ เพิ่มโครงงาน</b><small>ระบุอาจารย์และสมาชิก</small></a></div>
+  <div class="col-md-4 mb-2"><a class="card p-3 act" href="/tasks"><b>📋 งานของฉัน</b><small>ดูงานที่ต้องส่งทั้งหมด</small></a></div>
+{{else}}
+  <div class="col-md-4 mb-2"><a class="card p-3 act" href="/tasks"><b>📋 มอบหมายงาน</b><small>ให้บุคคลหรือทีมโครงงาน</small></a></div>
+  <div class="col-md-4 mb-2"><a class="card p-3 act" href="/overview"><b>🗓️ ตารางเวลา</b><small>ภาพรวมวันเริ่ม–ส่งของงาน</small></a></div>
+  <div class="col-md-4 mb-2"><a class="card p-3 act" href="#" onclick="document.getElementById('addp').showModal();return false"><b>➕ เพิ่มโครงงาน</b><small>สร้างโครงงานใหม่</small></a></div>
+{{/if}}
+</div>
+
+{{#if isAdmin}}
+{{#if sys.pending}}<div class="alert alert-warning">มีคำขอสิทธิ์อาจารย์ {{sys.pending}} รายการ — <a href="/admin/users">ตรวจสอบและอนุมัติ</a></div>{{/if}}
+<div class="row mb-3">
+  <div class="col-6 col-md"><div class="card stat p-3"><b>{{sys.users}}</b>ผู้ใช้ <small class="text-muted">(อาจารย์ {{sys.advisors}})</small></div></div>
+  <div class="col-6 col-md"><div class="card stat p-3"><b>{{pstat.all}}</b>โครงงาน</div></div>
+  <div class="col-6 col-md"><div class="card stat p-3"><b>{{sys.tasks}}</b>งานทั้งหมด</div></div>
+  <div class="col-6 col-md"><div class="card stat p-3"><b>{{waiting.length}}</b>รอตรวจ</div></div>
+  <div class="col-6 col-md"><div class="card stat p-3"><b>{{sys.idle}}</b>ไม่มีความเคลื่อนไหว 14 วัน</div></div>
+</div>
+{{#if sys.unlinked}}<div class="alert alert-warning">มี {{sys.unlinked}} โครงงานที่อาจารย์ยังไม่ผูกบัญชี (อาจารย์ยังไม่สมัคร/ยังไม่ได้รับสิทธิ์/อีเมลไม่ตรง)</div>{{/if}}
+{{else}}
+<div class="row mb-3">
+  <div class="col-6 col-md"><div class="card stat p-3"><b>{{pstat.all}}</b>โครงงาน</div></div>
+  <div class="col-6 col-md"><div class="card stat p-3"><b>{{pstat.doing}}</b>กำลังดำเนินการ</div></div>
+  <div class="col-6 col-md"><div class="card stat p-3"><b>{{pstat.review}}</b>รอตรวจ</div></div>
+  <div class="col-6 col-md"><div class="card stat p-3"><b>{{pstat.done}}</b>เสร็จสิ้น</div></div>
+</div>
+{{/if}}
+{{#if unlinked}}<div class="alert alert-warning">โครงงานของคุณ {{unlinked}} รายการยังไม่มีอาจารย์ที่ผูกบัญชี — อาจารย์จะยังไม่เห็นงานที่ส่ง เปิดโครงงานแล้ว "แก้ไขรายละเอียด" เพื่อเลือกอาจารย์จากรายชื่อ</div>{{/if}}
+
+{{#if isUser}}
+{{#if returned.length}}<div class="alert alert-danger"><b>งานที่ถูกตีกลับ ต้องแก้ไข ({{returned.length}})</b>{{#each returned}}<div><a href="/tasks/{{id}}">{{title}}</a> — {{reviewNote}}</div>{{/each}}</div>{{/if}}
+<div class="card p-3 mb-3"><h5>งานที่ต้องทำ</h5>
+{{#each todo}}<a class="tk" href="/tasks/{{id}}"><b>{{title}}</b> <span class="badge as-{{status}}">{{statusTh}}</span> <span class="badge phase-{{phase}}">{{phaseTh}}</span><br><small>{{#if project}}{{project}} · {{/if}}กำหนดส่ง {{date due}}</small></a>{{else}}<p class="text-muted mb-0">ไม่มีงานค้าง{{#if canSubmit}} — ส่งความคืบหน้าให้อาจารย์ได้ที่ปุ่ม "ส่งงานให้อาจารย์"{{/if}}</p>{{/each}}</div>
+{{else}}
+<div class="row"><div class="col-md-6"><div class="card p-3 mb-3"><h5>รอตรวจ ({{waiting.length}})</h5>
+{{#each waiting}}<a class="tk" href="/tasks/{{id}}"><b>{{title}}</b><br><small>{{#if project}}{{project}}{{/if}}{{#if reviewDue}}{{#unless reviewedAt}} · ตรวจภายใน <span class="cd" data-t="{{reviewDue}}"></span>{{/unless}}{{/if}}</small></a>{{else}}<p class="text-muted mb-0">ไม่มีงานรอตรวจ</p>{{/each}}</div></div>
+<div class="col-md-6"><div class="card p-3 mb-3"><h5>เลยกำหนดส่ง ({{late.length}})</h5>
+{{#each late}}<a class="tk" href="/tasks/{{id}}"><b>{{title}}</b> <span class="badge as-{{status}}">{{statusTh}}</span><br><small>{{#if project}}{{project}} · {{/if}}กำหนด {{date due}}</small></a>{{else}}<p class="text-muted mb-0">ไม่มีงานเลยกำหนด</p>{{/each}}</div></div></div>
+{{/if}}
+<h5>{{#if isAdmin}}โครงงานทั้งหมด{{else}}โครงงานของฉัน{{/if}}</h5>
+{{> projectTable}}
+{{#if isAdvisor}}{{#unless rows.length}}<div class="alert alert-info">ยังไม่มีโครงงานที่เลือกคุณเป็นอาจารย์ — แต่คุณมอบหมายงานให้บุคคลโดยตรงได้ที่เมนู "งาน"</div>{{/unless}}{{/if}}

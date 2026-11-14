@@ -1,0 +1,4 @@
+{{#if people.length}}<div class="form-group"><label>มอบหมายให้บุคคล (เลือกได้หลายคน — แต่ละคนได้งานของตัวเอง ส่งและถูกตรวจแยกกัน)</label>
+<input class="form-control mb-1" placeholder="ค้นหาชื่อ/อีเมล" oninput="var q=this.value.toLowerCase();[].forEach.call(this.nextElementSibling.options,function(o){o.hidden=!!q&&o.text.toLowerCase().indexOf(q)<0})">
+<select class="form-control" name="assigneeIds" multiple size="6">{{#each people}}<option value="{{id}}">{{name}} ({{email}})</option>{{/each}}</select></div>
+{{else}}{{#if isStaffUser}}<p class="text-muted small">ยังไม่มีผู้ใช้ทั่วไปให้มอบหมาย — ให้เขาสมัครสมาชิกก่อน</p>{{/if}}{{/if}}
