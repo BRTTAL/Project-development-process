@@ -1,0 +1,22 @@
+<h3>งาน</h3>
+<form method="get" class="form-inline mb-3"><input class="form-control mr-2 mb-2" name="q" value="{{q}}" placeholder="ค้นหางาน/ประเภท">
+<select class="form-control mr-2 mb-2" name="p"><option value="">ทุกโครงงาน</option>{{#each projects}}<option value="{{id}}" {{#if sel}}selected{{/if}}>{{title}}</option>{{/each}}</select>
+<select class="form-control mr-2 mb-2" name="f"><option value="">ทั้งหมด</option><option value="todo" {{#if (eq f 'todo')}}selected{{/if}}>ต้องรับทราบ/แก้ไข</option><option value="review" {{#if (eq f 'review')}}selected{{/if}}>รอตรวจ</option><option value="late" {{#if (eq f 'late')}}selected{{/if}}>เลยกำหนด</option></select><button class="btn btn-outline-secondary mb-2">กรอง</button></form>
+<div class="card tbl mb-4"><table class="table mb-0"><thead><tr><th>งาน</th><th>โครงงาน</th><th>ที่มา</th><th>สถานะ</th><th>เริ่ม</th><th>ส่ง</th></tr></thead><tbody>
+{{#each rows}}<tr><td><a href="/tasks/{{id}}"><b>{{title}}</b></a>{{#if type}}<br><small class="text-muted">{{type}}</small>{{/if}}</td><td>{{project}}</td><td>{{originTh}}{{#if assignee}}<br><small>👤 {{assignee}}</small>{{/if}}</td><td><span class="badge as-{{status}}">{{statusTh}}</span> <span class="badge phase-{{phase}}">{{phaseTh}}</span></td><td>{{date startDate}}</td><td>{{date due}}</td></tr>
+{{else}}<tr><td colspan="6" class="text-muted">ไม่พบงาน</td></tr>{{/each}}</tbody></table></div>
+{{#if isStaffUser}}<form method="post" action="/tasks" class="card p-3" style="max-width:760px"><h5>สร้าง/มอบหมายงาน</h5><input type="hidden" name="tz">
+  <div class="form-group"><label>โครงงาน (ไม่บังคับ — มอบหมายให้บุคคลโดยตรงได้เลย)</label><select class="form-control" name="projectId"><option value="">— ไม่ผูกโครงงาน —</option>{{#each projects}}<option value="{{id}}">{{title}}</option>{{/each}}</select></div>
+  <div class="form-group"><input class="form-control" name="title" placeholder="ชื่องาน" required></div>
+  <div class="form-group"><textarea class="form-control" name="description" rows="2" placeholder="รายละเอียด"></textarea></div>
+  {{> assignPicker}}<div class="form-check mb-3"><input class="form-check-input" type="checkbox" name="assignTeam" value="1" id="at"><label class="form-check-label" for="at">มอบหมายให้ทีมของโครงงานที่เลือกด้วย</label></div>
+  <div class="form-row"><div class="col"><label>ประเภท (พิมพ์เองได้)</label><input class="form-control" name="type" list="types"><datalist id="types">{{#each types}}<option value="{{this}}">{{/each}}</datalist></div>
+  <div class="col"><label>วันเริ่ม</label><input class="form-control" type="date" name="startDate"></div><div class="col"><label>กำหนดส่ง</label><input class="form-control" type="date" name="due"></div><div class="col"><label>เวลาตรวจ</label><input class="form-control" type="datetime-local" name="reviewDue"></div></div>
+  <button class="btn btn-success mt-3">มอบหมายงาน</button></form>
+{{else}}{{#if projects.length}}<form method="post" action="/tasks" class="card p-3" style="max-width:720px"><h5>เพิ่มงานของทีม</h5>
+  <div class="form-group"><label>โครงงาน</label><select class="form-control" name="projectId" required>{{#each projects}}<option value="{{id}}">{{title}}</option>{{/each}}</select></div>
+  <div class="form-group"><input class="form-control" name="title" placeholder="ชื่องาน" required></div>
+  <div class="form-group"><textarea class="form-control" name="description" rows="2" placeholder="รายละเอียด"></textarea></div>
+  <div class="form-row"><div class="col"><label>ประเภท (พิมพ์เองได้)</label><input class="form-control" name="type" list="types"><datalist id="types">{{#each types}}<option value="{{this}}">{{/each}}</datalist></div>
+  <div class="col"><label>วันเริ่ม</label><input class="form-control" type="date" name="startDate"></div><div class="col"><label>กำหนดส่ง</label><input class="form-control" type="date" name="due"></div></div>
+  <button class="btn btn-success mt-3">บันทึกงาน</button></form>{{else}}<p class="text-muted">ยังไม่มีโครงงาน — <a href="/projects/new">เพิ่มโครงงาน</a>ก่อนจึงเพิ่มงานของทีมได้ (งานที่อาจารย์มอบหมายให้คุณจะแสดงในตารางด้านบนอัตโนมัติ)</p>{{/if}}{{/if}}

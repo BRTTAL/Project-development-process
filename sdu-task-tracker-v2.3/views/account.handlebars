@@ -1,0 +1,7 @@
+<h3>บัญชีของฉัน</h3>
+<p>{{user.name}} · {{user.username}} · {{user.email}} · {{user.roleTh}}{{#if user.advisorRequest}} <span class="badge badge-warning">รอผู้ดูแลอนุมัติสิทธิ์อาจารย์</span>{{/if}}</p>
+<form method="post" action="/account/password" class="card p-3" style="max-width:440px"><h5>เปลี่ยนรหัสผ่าน</h5>
+  <div class="form-group"><label>รหัสผ่านปัจจุบัน</label><input class="form-control" type="password" name="current" required></div>
+  <div class="form-group"><label>รหัสผ่านใหม่ (อย่างน้อย 8 ตัว)</label><input class="form-control" type="password" name="password" required></div>
+  <div class="form-group"><label>ยืนยันรหัสผ่านใหม่</label><input class="form-control" type="password" name="password2" required></div>
+  <button class="btn btn-success">บันทึกรหัสผ่านใหม่</button></form>

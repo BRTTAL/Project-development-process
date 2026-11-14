@@ -1,0 +1,3 @@
+<h3>การแจ้งเตือน</h3>
+{{#each list}}<a class="tk" href="{{href}}"><b>{{text}}</b><br><small class="text-muted">{{datetime createdAt}}</small></a>{{else}}<p class="text-muted">ไม่มีการแจ้งเตือน</p>{{/each}}
+<p class="text-muted small mt-3">อีเมลแจ้งเตือนส่งเมื่อผู้ดูแลตั้งค่า SMTP_URL ไว้ (ดู README)</p>
