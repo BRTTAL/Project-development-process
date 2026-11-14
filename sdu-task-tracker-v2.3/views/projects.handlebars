@@ -1,4 +1,0 @@
-<div class="d-flex justify-content-between align-items-center mb-3"><h3 class="mb-0">โครงงาน</h3><a class="btn btn-success" href="/projects/new">+ เพิ่มโครงงาน</a></div>
-<form method="get" class="form-inline mb-3"><input class="form-control mr-2 mb-2" name="q" value="{{q}}" placeholder="ค้นหาชื่อ/ประเภท/เจ้าของ">
-<select class="form-control mr-2 mb-2" name="f" onchange="this.form.submit()"><option value="">ทุกสถานะ</option><option value="todo" {{#if (eq f 'todo')}}selected{{/if}}>ยังไม่เริ่ม</option><option value="doing" {{#if (eq f 'doing')}}selected{{/if}}>กำลังดำเนินการ</option><option value="review" {{#if (eq f 'review')}}selected{{/if}}>รอตรวจ</option><option value="done" {{#if (eq f 'done')}}selected{{/if}}>เสร็จสิ้น</option></select><button class="btn btn-outline-secondary mb-2">ค้นหา</button></form>
-{{> projectTable}}

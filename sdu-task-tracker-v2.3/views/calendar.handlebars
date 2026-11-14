@@ -1,8 +1,0 @@
-<div class="d-flex justify-content-between align-items-center flex-wrap mb-3"><h3 class="mb-0">ปฏิทินงาน</h3>
- <div><a class="btn btn-outline-secondary btn-sm" href="/calendar?m={{prev}}">← เดือนก่อน</a> <a class="btn btn-outline-secondary btn-sm" href="/calendar">วันนี้</a> <a class="btn btn-outline-secondary btn-sm" href="/calendar?m={{next}}">เดือนถัดไป →</a> <a class="btn btn-warning btn-sm" href="/calendar.ics">ดาวน์โหลด .ics</a></div></div>
-<div class="row"><div class="col-lg-8 mb-3"><div class="card p-3"><h5>{{label}}</h5><div class="tbl"><div class="cal">
- <div class="cal-h">อา</div><div class="cal-h">จ</div><div class="cal-h">อ</div><div class="cal-h">พ</div><div class="cal-h">พฤ</div><div class="cal-h">ศ</div><div class="cal-h">ส</div>
- {{#each weeks}}{{#each this}}<div class="cal-d {{#if empty}}empty{{/if}} {{#if today}}today{{/if}}">{{#unless empty}}<div class="n">{{day}}</div>{{#each events}}<a class="ev ev-{{phase}} ev-{{kind}}" href="/tasks/{{id}}" title="{{title}}">{{label}}: {{title}}</a>{{/each}}{{/unless}}</div>{{/each}}{{/each}}
-</div></div><small class="text-muted">ส่ง = กำหนดส่ง · เริ่ม = วันเริ่มงาน · ตรวจ = ถึงเวลาตรวจ (อาจารย์) · สี: แดง=เลยกำหนด ฟ้า=เปิดให้ทำ เทา=ยังไม่ถึงวันเริ่ม เขียว=เสร็จแล้ว</small></div></div>
-<div class="col-lg-4 mb-3"><div class="card p-3"><h5>งานที่กำลังมาถึง (14 วัน)</h5>
- {{#each agenda}}<a class="tk" href="/tasks/{{id}}"><b>{{title}}</b> <span class="badge as-{{status}}">{{statusTh}}</span><br><small>{{#if project}}{{project}} · {{/if}}{{date due}} · <b class="{{#if late}}text-danger{{/if}}{{#if soon}}text-warning{{/if}}">{{text}}</b></small></a>{{else}}<p class="text-muted mb-0">ไม่มีงานที่ใกล้ถึง</p>{{/each}}</div></div></div>

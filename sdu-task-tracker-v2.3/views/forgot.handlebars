@@ -1,5 +1,0 @@
-<form method="post" action="/forgot" style="max-width:440px"><h3>ลืมรหัสผ่าน</h3>
-{{#if mail}}<p class="text-muted">กรอกอีเมลที่สมัครไว้ ระบบจะส่งลิงก์ตั้งรหัสผ่านใหม่ให้ (ใช้ได้ 1 ชั่วโมง)</p>
-<div class="form-group"><label>อีเมล</label><input class="form-control" type="email" name="email" required autofocus></div><button class="btn btn-success">ส่งลิงก์</button>
-{{else}}<div class="alert alert-info">ระบบยังไม่ได้ตั้งค่าการส่งอีเมล — ให้ผู้ดูแลระบบกด "รีเซ็ตรหัสผ่าน" ให้ที่เมนู "ผู้ใช้"</div>{{/if}}
-<a class="ml-2" href="/login">กลับไปเข้าสู่ระบบ</a></form>

@@ -1,7 +1,0 @@
-<h3>ตารางเวลางาน</h3>
-<form method="get" class="form-inline mb-3"><select class="form-control" name="p" onchange="this.form.submit()"><option value="">ทุกโครงงาน</option>{{#each projects}}<option value="{{id}}" {{#if sel}}selected{{/if}}>{{title}}</option>{{/each}}</select></form>
-{{#if gantt}}<div class="card p-3 mb-4"><h5>ตารางเวลา ({{date gantt.from}} – {{date gantt.to}})</h5><div class="gantt">
-{{#each gantt.rows}}<div class="g-row"><a class="g-label" href="/tasks/{{id}}" title="{{project}}">{{title}}</a><div class="g-track">{{#if @root.gantt.today}}<i class="g-today" style="left:{{@root.gantt.today}}%"></i>{{/if}}<span class="g-bar phase-{{phase}}" style="left:{{left}}%;width:{{width}}%" title="{{date startDate}} – {{date due}}"></span></div></div>{{/each}}
-</div><small class="text-muted">เส้นแดง = วันนี้</small></div>{{else}}<p class="text-muted">ยังไม่มีงานที่ระบุวันเริ่ม/กำหนดส่ง</p>{{/if}}
-<div class="card tbl"><table class="table mb-0"><thead><tr><th>งาน</th><th>โครงงาน</th><th>สถานะ</th><th>เริ่ม</th><th>ส่ง</th></tr></thead><tbody>
-{{#each rows}}<tr><td><a href="/tasks/{{id}}">{{title}}</a></td><td>{{project}}</td><td><span class="badge as-{{status}}">{{statusTh}}</span> <span class="badge phase-{{phase}}">{{phaseTh}}</span></td><td>{{date startDate}}</td><td>{{date due}}</td></tr>{{/each}}</tbody></table></div>

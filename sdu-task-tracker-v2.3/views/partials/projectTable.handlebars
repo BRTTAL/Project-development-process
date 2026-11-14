@@ -1,3 +1,0 @@
-<div class="card tbl mb-3"><table class="table mb-0"><thead><tr><th>โครงงาน</th><th>ผู้พัฒนา (เจ้าของ)</th><th>อาจารย์</th><th>สถานะ</th><th style="min-width:130px">ความคืบหน้า</th><th>อัปเดตล่าสุด</th></tr></thead><tbody>
-{{#each rows}}<tr><td><a href="/projects/{{id}}"><b>{{title}}</b></a>{{#if type}}<br><small class="text-muted">{{type}}</small>{{/if}}</td><td>{{owner}}<br><small class="text-muted">สมาชิก {{teamSize}} คน</small></td><td>{{advisorNames}}</td><td><span class="badge stk-{{stK}}">{{stTh}}</span></td><td><div class="bar"><i style="width:{{pct}}%"></i></div><small>{{pct}}% ({{total}} งาน)</small></td><td>{{date last}}</td></tr>
-{{else}}<tr><td colspan="6" class="text-muted">ยังไม่มีโครงงาน</td></tr>{{/each}}</tbody></table></div>
